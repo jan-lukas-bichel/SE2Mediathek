@@ -1,7 +1,5 @@
 package de.uni_hamburg.informatik.swt.se2.mediathek.materialien;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import de.uni_hamburg.informatik.swt.se2.mediathek.materialien.medien.Medium;
@@ -17,21 +15,44 @@ public class Vormerkkarte
         _vormerker.add(vormerker);
     }
 
-    private void registriereVormerkAktion()
+    public void addVormerker(Kunde kunde)
     {
-        _vormerkUI.getVormerkenButton()
-            .addActionListener(new ActionListener()
-            {
-                @Override
-                public void actionPerformed(ActionEvent e)
-                {
-                    merkeAusgewaehlteMedienVor();
-                }
-            });
+        if (!istVoll())
+        {
+            _vormerker.add(kunde);
+        }
     }
 
-    +addVormerker(Kunde):void     +getVormerker(int): Kunde
-    +removeVormerker(Kunde):void
-    +getMedium():Medium
-    +istVoll()Boolean
+    public void removeVormerker(Kunde kunde)
+    {
+        for (int i = 0; i < _vormerker.size(); i++)
+        {
+            if (_vormerker.get(i) == kunde)
+            {
+                _vormerker.remove(i);
+            }
+        }
+    }
+
+    public Kunde getVormerker(int vormerkerIndex)
+    {
+        return _vormerker.get(vormerkerIndex);
+    }
+
+    public Medium getMedium()
+    {
+        return _medium;
+    }
+
+    public boolean istVoll()
+    {
+        if (_vormerker.size() >= 3)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 }
