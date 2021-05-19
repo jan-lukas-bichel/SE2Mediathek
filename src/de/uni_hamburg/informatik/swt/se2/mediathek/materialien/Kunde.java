@@ -25,8 +25,6 @@ public class Kunde
     private String _vorname;
     private String _wohnort;
 
-    private String Test = "test";
-
     /**
      * Konstruktor für einen Kunden.
      * 
