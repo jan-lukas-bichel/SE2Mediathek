@@ -212,10 +212,22 @@ public class VormerkWerkzeug
         // TODO für Aufgabenblatt 6 (nicht löschen): Prüfung muss noch eingebaut
         // werden. Ist dies korrekt imlpementiert, wird der Vormerk-Button gemäß
         // der Anforderungen a), b), c) und e) aktiviert.
-        boolean hatDreiVormerker = false;
-        for()
-        
-        boolean vormerkenMoeglich = (kunde != null) && !medien.isEmpty()&&hatDreiVormerker == false;
+        boolean vormerkenMoeglich = (kunde != null) && !medien.isEmpty();
+        if (vormerkenMoeglich == true)
+        {
+            boolean hatDreiVormerker = false;
+            for (Medium medium : medien)
+            {
+                Vormerkkarte karte = _verleihService.getVormerkKarte(medium);
+                if (karte.istVoll())
+                {
+                    hatDreiVormerker = true;
+                }
+            }
+        }
+
+        boolean vormerkenMoeglich = (kunde != null) && !medien.isEmpty()
+                && hatDreiVormerker == false;
 
         return vormerkenMoeglich;
     }
