@@ -7,6 +7,7 @@ import java.util.List;
 import javax.swing.JPanel;
 
 import de.uni_hamburg.informatik.swt.se2.mediathek.materialien.Kunde;
+import de.uni_hamburg.informatik.swt.se2.mediathek.materialien.Vormerkkarte;
 import de.uni_hamburg.informatik.swt.se2.mediathek.materialien.medien.Medium;
 import de.uni_hamburg.informatik.swt.se2.mediathek.services.ServiceObserver;
 import de.uni_hamburg.informatik.swt.se2.mediathek.services.kundenstamm.KundenstammService;
@@ -212,22 +213,19 @@ public class VormerkWerkzeug
         // TODO für Aufgabenblatt 6 (nicht löschen): Prüfung muss noch eingebaut
         // werden. Ist dies korrekt imlpementiert, wird der Vormerk-Button gemäß
         // der Anforderungen a), b), c) und e) aktiviert.
-        boolean vormerkenMoeglich = (kunde != null) && !medien.isEmpty();
+        boolean vormerkenMoeglich = (kunde != null) && !medien.isEmpty(); //erst die Grundbedingung rausfinden
+        //dann wenn das passt, dann...
         if (vormerkenMoeglich == true)
         {
-            boolean hatDreiVormerker = false;
-            for (Medium medium : medien)
+            for (Medium medium : medien) //prüfen wir für alle Medien ob die Karten voll sind
             {
                 Vormerkkarte karte = _verleihService.getVormerkKarte(medium);
                 if (karte.istVoll())
                 {
-                    hatDreiVormerker = true;
+                    return false;
                 }
             }
         }
-
-        boolean vormerkenMoeglich = (kunde != null) && !medien.isEmpty()
-                && hatDreiVormerker == false;
 
         return vormerkenMoeglich;
     }
