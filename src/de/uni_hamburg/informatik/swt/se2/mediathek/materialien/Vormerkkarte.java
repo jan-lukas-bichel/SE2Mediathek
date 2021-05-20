@@ -6,6 +6,7 @@ import de.uni_hamburg.informatik.swt.se2.mediathek.materialien.medien.Medium;
 
 public class Vormerkkarte
 {
+    //Test
     private ArrayList<Kunde> _vormerker = new ArrayList<Kunde>();
     private Medium _medium;
 
@@ -34,9 +35,9 @@ public class Vormerkkarte
         }
     }
 
-    public Kunde getVormerker(int vormerkerIndex)
+    public ArrayList<Kunde> getVormerker()
     {
-        return _vormerker.get(vormerkerIndex);
+        return _vormerker;
     }
 
     public Medium getMedium()
