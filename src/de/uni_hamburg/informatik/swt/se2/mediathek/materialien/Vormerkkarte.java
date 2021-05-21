@@ -35,6 +35,8 @@ public class Vormerkkarte
         }
     }
 
+    // Doch über Index zugreifung? ansonsten müsste ich das In den Funktionen machen wäre nicht so guter stil
+    // also param int index und rückgabewert Kunde Gruß Ali 
     public ArrayList<Kunde> getVormerker()
     {
         return _vormerker;

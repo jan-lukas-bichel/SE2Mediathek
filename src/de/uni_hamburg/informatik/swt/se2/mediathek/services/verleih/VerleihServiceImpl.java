@@ -5,9 +5,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.JOptionPane;
+
 import de.uni_hamburg.informatik.swt.se2.mediathek.fachwerte.Datum;
 import de.uni_hamburg.informatik.swt.se2.mediathek.materialien.Kunde;
 import de.uni_hamburg.informatik.swt.se2.mediathek.materialien.Verleihkarte;
+import de.uni_hamburg.informatik.swt.se2.mediathek.materialien.Vormerkkarte;
 import de.uni_hamburg.informatik.swt.se2.mediathek.materialien.medien.Medium;
 import de.uni_hamburg.informatik.swt.se2.mediathek.services.AbstractObservableService;
 import de.uni_hamburg.informatik.swt.se2.mediathek.services.kundenstamm.KundenstammService;
@@ -29,6 +32,12 @@ public class VerleihServiceImpl extends AbstractObservableService
      * die Angabe des Mediums möglich. Beispiel: _verleihkarten.get(medium)
      */
     private Map<Medium, Verleihkarte> _verleihkarten;
+
+    /**
+     * Diese Map speicher für jedes eingefügte Medium die dazugehörige
+     * Vormerkkarte.
+     */
+    private Map<Medium, Vormerkkarte> _vormerkkarte;
 
     /**
      * Der Medienbestand.
@@ -97,6 +106,7 @@ public class VerleihServiceImpl extends AbstractObservableService
         return _verleihkarten.get(medium) != null;
     }
 
+    // Verändert!
     @Override
     public boolean istVerleihenMoeglich(Kunde kunde, List<Medium> medien)
     {
@@ -105,7 +115,8 @@ public class VerleihServiceImpl extends AbstractObservableService
         assert medienImBestand(
                 medien) : "Vorbedingung verletzt: medienImBestand(medien)";
 
-        return sindAlleNichtVerliehen(medien);
+        return sindAlleNichtVerliehen(medien)
+                && istVerleihenMoeglichVormerker(kunde, medien);
     }
 
     @Override
@@ -297,4 +308,73 @@ public class VerleihServiceImpl extends AbstractObservableService
         return result;
     }
 
+    /**
+     * Private Hilfsmethode
+     * Gibt zurück ob der Kunde bei allen Medien erster in der Vormerker Liste ist
+     * 
+     * @param kunde Kuunde der die medien ausleihen möchte
+     * @param medien Liste von Medien
+     * @return boolean ist bei allen Medien erster in der Liste
+     */
+    private boolean istVerleihenMoeglichVormerker(Kunde kunde,
+            List<Medium> medien)
+    {
+        List<Boolean> listeIstAusleihenMoeglich = erstelleListe(kunde, medien);
+        boolean istVormerker = false;
+        int i;
+
+        for (i = 0; i < listeIstAusleihenMoeglich.size(); i++)
+        {
+            if (listeIstAusleihenMoeglich.get(i) == true)
+            {
+                istVormerker = true;
+            }
+            else
+            {
+                istVormerker = false;
+                continue;
+            }
+        }
+
+        if (!istVormerker)
+        {
+            JOptionPane.showMessageDialog(null, "Ausleihen von: "
+                    + medien.get(i)
+                        .getMedienBezeichnung()
+                    + " nicht möglich da, Sie nicht erster Platz in der Vormerker Liste sind",
+                    "Ausleihen nicht möglich", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Private Hilfsmethode
+     * Erstellt liste mit boolean Werten die aussagen bei welchen Medien ausleihen möglich wäre
+     * 
+     * @param kunde Kuunde der die medien ausleihen möchte
+     * @param medien Liste von Medien
+     * @return List<Boolean> mit Werten die aussagen bei welchen Medien ausleihen möglich ist
+     */
+    private List<Boolean> erstelleListe(Kunde kunde, List<Medium> medien)
+    {
+        List<Boolean> istErsterPlatz = new ArrayList<Boolean>();
+
+        for (Medium medium : medien)
+        {
+            Vormerkkarte vormerk = _vormerkkarte.get(medium);
+            if (vormerk == null || vormerk.getVormerker(0)
+                .equals(kunde))
+            {
+                istErsterPlatz.add(true);
+            }
+            else
+            {
+                istErsterPlatz.add(false);
+            }
+        }
+
+        return istErsterPlatz;
+    }
 }
