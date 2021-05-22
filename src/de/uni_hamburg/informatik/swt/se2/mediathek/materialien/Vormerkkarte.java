@@ -10,7 +10,7 @@ public class Vormerkkarte
     private ArrayList<Kunde> _vormerker = new ArrayList<Kunde>();
     private Medium _medium;
 
-    Vormerkkarte(Kunde vormerker, Medium medium)
+    public Vormerkkarte(Kunde vormerker, Medium medium)
     {
         _medium = medium;
         _vormerker.add(vormerker);

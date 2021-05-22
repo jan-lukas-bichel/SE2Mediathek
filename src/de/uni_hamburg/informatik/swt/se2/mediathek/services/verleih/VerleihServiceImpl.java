@@ -34,7 +34,7 @@ public class VerleihServiceImpl extends AbstractObservableService
     private Map<Medium, Verleihkarte> _verleihkarten;
 
     /**
-     * Diese Map speicher für jedes eingefügte Medium die dazugehörige
+     * Diese Map speichert für jedes eingefügte Medium die dazugehörige
      * Vormerkkarte.
      */
     private Map<Medium, Vormerkkarte> _vormerkkarte;
@@ -73,6 +73,7 @@ public class VerleihServiceImpl extends AbstractObservableService
         assert medienbestand != null : "Vorbedingung verletzt: medienbestand  != null";
         assert initialBestand != null : "Vorbedingung verletzt: initialBestand  != null";
         _verleihkarten = erzeugeVerleihkartenBestand(initialBestand);
+        _vormerkkarte = new HashMap<Medium, Vormerkkarte>();
         _kundenstamm = kundenstamm;
         _medienbestand = medienbestand;
         _protokollierer = new VerleihProtokollierer();
@@ -306,6 +307,50 @@ public class VerleihServiceImpl extends AbstractObservableService
             }
         }
         return result;
+    }
+
+    /**
+     * Setzt neuen Vormerker auf die Vormerker Liste 
+     * falls keine existiert wird eine neue Vormerkkarte erstellt 
+     * 
+     * @param kunde Der Kunde der der Liste Hinzugefügt werden möchte
+     * @param medien Liste an Medien bei denen der Kunde hinzugefügt werden möchte
+     */
+    public void vormerkeFuer(Kunde kunde, List<Medium> medien)
+    {
+        assert medien != null : "Vorbedingung verletzt: medien ist null";
+        assert kunde != null : "Vorbedingung verletzt: kunde ist null";
+
+        boolean exKarte = false;
+        for (Medium medium : medien)
+        {
+            exKarte = gibtEsVormerkkarteSchon(medium);
+            if (exKarte)
+            {
+                _vormerkkarte.get(medium)
+                    .addVormerker(kunde);
+            }
+            else
+            {
+                _vormerkkarte.put(medium, new Vormerkkarte(kunde, medium));
+            }
+        }
+    }
+
+    /**
+     * Private Hilfsmethode
+     * Gibt zurück ob es schon eine Vormerkkarte gibt oder nicht 
+     * @param medium Das Medium für das geprüft werden soll ob es schon eine Vormerkkarte gibt
+     * @return boolean Gibt es eine Vormerkkarte oder nicht 
+     */
+    private boolean gibtEsVormerkkarteSchon(Medium medium)
+    {
+        if (_vormerkkarte.containsKey(medium))
+        {
+            return true;
+        }
+
+        return false;
     }
 
     /**
