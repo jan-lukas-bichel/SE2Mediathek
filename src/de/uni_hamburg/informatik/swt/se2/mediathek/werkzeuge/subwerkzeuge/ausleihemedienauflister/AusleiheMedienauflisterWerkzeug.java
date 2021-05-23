@@ -91,14 +91,12 @@ public class AusleiheMedienauflisterWerkzeug extends ObservableSubWerkzeug
 
             if (vormerkkarte != null)
             {
-                if (!vormerkkarte.istLeer())
-                {
-                    Kunde ersterVormerker = vormerkkarte.getVormerker()
-                        .get(0);
+                Kunde ersterVormerker = vormerkkarte.getVormerker()
+                    .get(0);
 
-                    medienFormatierer.add(new AusleiheMedienFormatierer(medium,
-                            istVerliehen, ersterVormerker));
-                }
+                medienFormatierer.add(new AusleiheMedienFormatierer(medium,
+                        istVerliehen, ersterVormerker));
+
             }
         }
         _ui.getMedienAuflisterTableModel()

@@ -64,6 +64,11 @@ public class Vormerkkarte
         return _vormerker;
     }
 
+    public Kunde getVormerkerByIndex(int index)
+    {
+        return _vormerker.get(index);
+    }
+
     /**
      * Gibt das Medium zurück, dessen Ausleihe auf der Karte vermerkt ist
      * 
@@ -86,18 +91,6 @@ public class Vormerkkarte
     public boolean istVoll()
     {
         if (_vormerker.size() >= _maxVormerkerAnzahl)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-
-    public boolean istLeer()
-    {
-        if (_vormerker.size() == 0)
         {
             return true;
         }

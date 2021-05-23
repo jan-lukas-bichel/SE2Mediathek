@@ -106,52 +106,8 @@ public class VormerkMedienauflisterWerkzeug extends ObservableSubWerkzeug
                     {
                         vormerkerArr[i] = vormerkerList.get(i);
                     }
-                    else
-                    {
-                        vormerkerArr[i] = null;
-                    }
                 }
             }
-
-            //            if (_verleihService.istVorgemerkt(medium)
-            //                    && _verleihService.getVormerkkarteFuer(medium)
-            //                        .getZweiterVormerker() != null
-            //                    && _verleihService.getVormerkkarteFuer(medium)
-            //                        .getDritterVormerker() != null)
-            //            {
-            //                vormerker1 = _verleihService.getErsterVormerkerFuer(medium);
-            //                vormerker2 = _verleihService.getVormerkkarteFuer(medium)
-            //                    .getZweiterVormerker();
-            //                vormerker3 = _verleihService.getVormerkkarteFuer(medium)
-            //                    .getDritterVormerker();
-            //            }
-            //            else if (_verleihService.istVorgemerkt(medium)
-            //                    && _verleihService.getVormerkkarteFuer(medium)
-            //                        .getZweiterVormerker() != null)
-            //            {
-            //                vormerker1 = _verleihService.getErsterVormerkerFuer(medium);
-            //                vormerker2 = _verleihService.getVormerkkarteFuer(medium)
-            //                    .getZweiterVormerker();
-            //                vormerker3 = null;
-            //            }
-            //            else if (_verleihService.istVorgemerkt(medium))
-            //            {
-            //                vormerker1 = _verleihService.getErsterVormerkerFuer(medium);
-            //                vormerker2 = null;
-            //                vormerker3 = null;
-            //            }
-            //            else if (_verleihService.istVerliehen(medium))
-            //            {
-            //                vormerker1 = null;
-            //                vormerker2 = null;
-            //                vormerker3 = null;
-            //            }
-            //            else
-            //            {
-            //                vormerker1 = null;
-            //                vormerker2 = null;
-            //                vormerker3 = null;
-            //            }
 
             medienFormatierer
                 .add(new VormerkMedienFormatierer(medium, entleiher,
