@@ -225,4 +225,5 @@ public class Kunde
         }
         return result;
     }
+
 }
