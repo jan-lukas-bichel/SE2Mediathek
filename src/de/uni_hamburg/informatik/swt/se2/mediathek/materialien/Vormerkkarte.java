@@ -6,7 +6,7 @@ import de.uni_hamburg.informatik.swt.se2.mediathek.materialien.medien.Medium;
 
 public class Vormerkkarte
 {
-    //Test
+    private int _maxVormerkerAnzahl = 3;
     private ArrayList<Kunde> _vormerker = new ArrayList<Kunde>();
     private Medium _medium;
 
@@ -51,55 +51,17 @@ public class Vormerkkarte
         }
     }
 
-    // Doch über Index zugreifung? ansonsten müsste ich das In den Funktionen machen wäre nicht so guter stil
-    // also param int index und rückgabewert Kunde Gruß Ali 
-    //    public ArrayList<Kunde> getVormerker()
-    //    {
-    //        return _vormerker;
-    //    }
-
     /**
-     * Gibt den ersten Vormerker zurück
+     * Gibt die Länge der Schlange von Vormerkern zurück
      * 
-     * @return den ersten Vormerker 
+     * @return die Anzahl der Vormerker des Mediums
      * 
-     * @ensure result != null
+     * @ensure result = _vormerker
+     * @ensure result.size() >= _maxVormerkerAnzahl;
      */
-    public Kunde getErsterVormerker()
+    public ArrayList<Kunde> getVormerker()
     {
-        return _vormerker.get(0);
-    }
-
-    /**
-     * Gibt den zweiten Vormerker zurück
-     * 
-     * @return den zweiten Vormerker 
-     * 
-     * @ensure result != null
-     */
-    public Kunde getZweiterVormerker()
-    {
-        if (_vormerker.size() > 1)
-        {
-            return _vormerker.get(1);
-        }
-        return null;
-    }
-
-    /**
-     * Gibt den dritten Vormerker zurück
-     * 
-     * @return den dritten Vormerker 
-     * 
-     * @ensure result != null
-     */
-    public Kunde getDritterVormerker()
-    {
-        if (_vormerker.size() > 2)
-        {
-            return _vormerker.get(2);
-        }
-        return null;
+        return _vormerker;
     }
 
     /**
@@ -114,9 +76,16 @@ public class Vormerkkarte
         return _medium;
     }
 
+    /**
+     * Gibt "true" zurück, wenn 3 Vormerkungen für das Medium eingetragen sind, sonst "false"
+     * 
+     * @return Boolean
+     * 
+     * @ensure result == true, wenn 3 Vormerker für das Medium eingetragen sind
+     */
     public boolean istVoll()
     {
-        if (_vormerker.size() >= 3)
+        if (_vormerker.size() >= _maxVormerkerAnzahl)
         {
             return true;
         }
@@ -124,17 +93,5 @@ public class Vormerkkarte
         {
             return false;
         }
-    }
-
-    /**
-     * Gibt die Länge der Schlange von Vormerkern zurück
-     * 
-     * @return die Anzahl der Vormerker des Mediums
-     * 
-     * @ensure result < 4
-     */
-    public int getSize()
-    {
-        return _vormerker.size();
     }
 }

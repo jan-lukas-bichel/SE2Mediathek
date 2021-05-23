@@ -37,7 +37,7 @@ public class VerleihServiceImpl extends AbstractObservableService
      * Diese Map speichert für jedes eingefügte Medium die dazugehörige
      * Vormerkkarte.
      */
-    private Map<Medium, Vormerkkarte> _vormerkkarte;
+    private Map<Medium, Vormerkkarte> _vormerkkarten;
 
     /**
      * Der Medienbestand.
@@ -73,7 +73,7 @@ public class VerleihServiceImpl extends AbstractObservableService
         assert medienbestand != null : "Vorbedingung verletzt: medienbestand  != null";
         assert initialBestand != null : "Vorbedingung verletzt: initialBestand  != null";
         _verleihkarten = erzeugeVerleihkartenBestand(initialBestand);
-        _vormerkkarte = new HashMap<Medium, Vormerkkarte>();
+        _vormerkkarten = new HashMap<Medium, Vormerkkarte>();
         _kundenstamm = kundenstamm;
         _medienbestand = medienbestand;
         _protokollierer = new VerleihProtokollierer();
@@ -327,12 +327,12 @@ public class VerleihServiceImpl extends AbstractObservableService
             exKarte = gibtEsVormerkkarteSchon(medium);
             if (exKarte)
             {
-                _vormerkkarte.get(medium)
+                _vormerkkarten.get(medium)
                     .addVormerker(kunde);
             }
             else
             {
-                _vormerkkarte.put(medium, new Vormerkkarte(kunde, medium));
+                _vormerkkarten.put(medium, new Vormerkkarte(kunde, medium));
             }
         }
     }
@@ -345,7 +345,7 @@ public class VerleihServiceImpl extends AbstractObservableService
      */
     private boolean gibtEsVormerkkarteSchon(Medium medium)
     {
-        if (_vormerkkarte.containsKey(medium))
+        if (_vormerkkarten.containsKey(medium))
         {
             return true;
         }
@@ -408,8 +408,9 @@ public class VerleihServiceImpl extends AbstractObservableService
 
         for (Medium medium : medien)
         {
-            Vormerkkarte vormerk = _vormerkkarte.get(medium);
-            if (vormerk == null || vormerk.getErsterVormerker()
+            Vormerkkarte vormerk = _vormerkkarten.get(medium);
+            if (vormerk == null || vormerk.getVormerker()
+                .get(0)
                 .equals(kunde))
             {
                 istErsterPlatz.add(true);
@@ -427,6 +428,12 @@ public class VerleihServiceImpl extends AbstractObservableService
     @Override
     public boolean istVorgemerkt(Medium medium)
     {
+        if (_vormerkkarten.get(medium)
+            .getVormerker()
+            .size() > 0)
+        {
+            return true;
+        }
         return false;
     }
 
@@ -447,16 +454,33 @@ public class VerleihServiceImpl extends AbstractObservableService
     @Override
     public void merkeVor(Kunde kunde, Medium medium)
     {
-        // TODO Auto-generated method stub
         return;
-
     }
 
     @Override
     public boolean istVormerkenMoeglich(Kunde kunde, List<Medium> medien)
     {
-        // TODO Auto-generated method stub
-        return;
+        for (Medium medium : medien)
+        {
+            //Check ob Vormerkliste voll ist
+            if (_vormerkkarten.get(medium)
+                .istVoll())
+            {
+                return false;
+            }
+
+            //Check ob der Kunde schon auf der Vormerkliste ist
+            for (Kunde vormerker : _vormerkkarten.get(medium)
+                .getVormerker())
+            {
+                if (vormerker == kunde)
+                {
+                    return false;
+                }
+            }
+        }
+        //Sonst ist vormerken möglich
+        return true;
     }
 
     @Override
@@ -466,8 +490,8 @@ public class VerleihServiceImpl extends AbstractObservableService
                 medium) : "Vorbedingung verletzt: istVorgemerkt(medium)";
 
         Vormerkkarte vormerkkarte = getVormerkkarteFuer(medium);
-        return vormerkkarte.getErsterVormerker();
-
+        return vormerkkarte.getVormerker()
+            .get(0);
     }
 
 }
