@@ -94,4 +94,16 @@ public class Vormerkkarte
             return false;
         }
     }
+
+    public boolean istLeer()
+    {
+        if (_vormerker.size() == 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 }

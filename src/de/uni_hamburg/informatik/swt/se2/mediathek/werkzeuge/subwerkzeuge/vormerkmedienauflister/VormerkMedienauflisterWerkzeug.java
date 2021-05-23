@@ -8,6 +8,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import de.uni_hamburg.informatik.swt.se2.mediathek.materialien.Kunde;
+import de.uni_hamburg.informatik.swt.se2.mediathek.materialien.Vormerkkarte;
 import de.uni_hamburg.informatik.swt.se2.mediathek.materialien.medien.Medium;
 import de.uni_hamburg.informatik.swt.se2.mediathek.services.ServiceObserver;
 import de.uni_hamburg.informatik.swt.se2.mediathek.services.medienbestand.MedienbestandService;
@@ -87,24 +88,28 @@ public class VormerkMedienauflisterWerkzeug extends ObservableSubWerkzeug
 
             Kunde entleiher = null;
             Kunde[] vormerkerArr = new Kunde[3];
-            ArrayList<Kunde> vormerkerList = _verleihService
-                .getVormerkkarteFuer(medium)
-                .getVormerker();
-
-            if (_verleihService.istVerliehen(medium))
+            ArrayList<Kunde> vormerkerList;
+            Vormerkkarte vormerkkarte = _verleihService
+                .getVormerkkarteFuer(medium);
+            if (vormerkkarte != null)
             {
-                entleiher = _verleihService.getEntleiherFuer(medium);
-            }
+                vormerkerList = vormerkkarte.getVormerker();
 
-            for (int i = 0; i < vormerkerArr.length; i++)
-            {
-                if (i <= vormerkerList.size())
+                if (_verleihService.istVerliehen(medium))
                 {
-                    vormerkerArr[i] = vormerkerList.get(i);
+                    entleiher = _verleihService.getEntleiherFuer(medium);
                 }
-                else
+
+                for (int i = 0; i < vormerkerArr.length; i++)
                 {
-                    vormerkerArr[i] = null;
+                    if (i <= vormerkerList.size())
+                    {
+                        vormerkerArr[i] = vormerkerList.get(i);
+                    }
+                    else
+                    {
+                        vormerkerArr[i] = null;
+                    }
                 }
             }
 

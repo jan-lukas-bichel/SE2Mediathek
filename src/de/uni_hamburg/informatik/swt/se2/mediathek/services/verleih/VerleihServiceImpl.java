@@ -448,7 +448,7 @@ public class VerleihServiceImpl extends AbstractObservableService
     public Vormerkkarte getVormerkkarteFuer(Medium medium)
     {
         // TODO Auto-generated method stub
-        return null;
+        return _vormerkkarten.get(medium);
     }
 
     @Override
