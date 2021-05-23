@@ -219,7 +219,8 @@ public class VormerkWerkzeug
         {
             for (Medium medium : medien) //prüfen wir für alle Medien ob die Karten voll sind
             {
-                Vormerkkarte karte = _verleihService.getVormerkKarte(medium);
+                Vormerkkarte karte = _verleihService
+                    .getVormerkkarteFuer(medium);
                 if (karte.istVoll())
                 {
                     return false;
@@ -248,7 +249,7 @@ public class VormerkWerkzeug
             for (Medium medium : selectedMedien)
             {
 
-                _verleihService.addVormerker(selectedKunde, medium);
+                _verleihService.merkeVor(selectedKunde, medium);
             }
         }
 
