@@ -409,7 +409,7 @@ public class VerleihServiceImpl extends AbstractObservableService
         for (Medium medium : medien)
         {
             Vormerkkarte vormerk = _vormerkkarte.get(medium);
-            if (vormerk == null || vormerk.getVormerker(0)
+            if (vormerk == null || vormerk.getErsterVormerker()
                 .equals(kunde))
             {
                 istErsterPlatz.add(true);
@@ -422,4 +422,52 @@ public class VerleihServiceImpl extends AbstractObservableService
 
         return istErsterPlatz;
     }
+
+    //müssen noch implemnetiert werden
+    @Override
+    public boolean istVorgemerkt(Medium medium)
+    {
+        return false;
+    }
+
+    @Override
+    public boolean sindAlleVorgemerkt(List<Medium> medien)
+    {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public Vormerkkarte getVormerkkarteFuer(Medium medium)
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public void merkeVor(Kunde kunde, Medium medium)
+    {
+        // TODO Auto-generated method stub
+        return;
+
+    }
+
+    @Override
+    public boolean istVormerkenMoeglich(Kunde kunde, List<Medium> medien)
+    {
+        // TODO Auto-generated method stub
+        return;
+    }
+
+    @Override
+    public Kunde getErsterVormerkerFuer(Medium medium)
+    {
+        assert istVorgemerkt(
+                medium) : "Vorbedingung verletzt: istVorgemerkt(medium)";
+
+        Vormerkkarte vormerkkarte = getVormerkkarteFuer(medium);
+        return vormerkkarte.getErsterVormerker();
+
+    }
+
 }
