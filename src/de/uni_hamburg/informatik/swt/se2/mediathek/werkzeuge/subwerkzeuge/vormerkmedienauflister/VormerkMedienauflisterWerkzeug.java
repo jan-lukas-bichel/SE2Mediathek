@@ -84,10 +84,60 @@ public class VormerkMedienauflisterWerkzeug extends ObservableSubWerkzeug
             // Entleiher und möglichen Vormerkern ausgestattet werden.
             // Ist dies korrekt implementiert, erscheinen in der Vormerkansicht
             // die Namen des Entleihers und der möglichen 3 Vormerker.
-            Kunde entleiher = null;
-            Kunde vormerker1 = null;
-            Kunde vormerker2 = null;
-            Kunde vormerker3 = null;
+
+            Kunde entleiher;
+            Kunde vormerker1;
+            Kunde vormerker2;
+            Kunde vormerker3;
+
+            if (_verleihService.istVerliehen(medium))
+            {
+                entleiher = _verleihService.getEntleiherFuer(medium);
+            }
+            else
+            {
+                entleiher = null;
+            }
+
+            if (_verleihService.istVorgemerkt(medium)
+                    && _verleihService.getVormerkkarteFuer(medium)
+                        .getZweiterVormerker() != null
+                    && _verleihService.getVormerkkarteFuer(medium)
+                        .getDritterVormerker() != null)
+            {
+                vormerker1 = _verleihService.getErsterVormerkerFuer(medium);
+                vormerker2 = _verleihService.getVormerkkarteFuer(medium)
+                    .getZweiterVormerker();
+                vormerker3 = _verleihService.getVormerkkarteFuer(medium)
+                    .getDritterVormerker();
+            }
+            else if (_verleihService.istVorgemerkt(medium)
+                    && _verleihService.getVormerkkarteFuer(medium)
+                        .getZweiterVormerker() != null)
+            {
+                vormerker1 = _verleihService.getErsterVormerkerFuer(medium);
+                vormerker2 = _verleihService.getVormerkkarteFuer(medium)
+                    .getZweiterVormerker();
+                vormerker3 = null;
+            }
+            else if (_verleihService.istVorgemerkt(medium))
+            {
+                vormerker1 = _verleihService.getErsterVormerkerFuer(medium);
+                vormerker2 = null;
+                vormerker3 = null;
+            }
+            else if (_verleihService.istVerliehen(medium))
+            {
+                vormerker1 = null;
+                vormerker2 = null;
+                vormerker3 = null;
+            }
+            else
+            {
+                vormerker1 = null;
+                vormerker2 = null;
+                vormerker3 = null;
+            }
 
             medienFormatierer.add(new VormerkMedienFormatierer(medium,
                     entleiher, vormerker1, vormerker2, vormerker3));
