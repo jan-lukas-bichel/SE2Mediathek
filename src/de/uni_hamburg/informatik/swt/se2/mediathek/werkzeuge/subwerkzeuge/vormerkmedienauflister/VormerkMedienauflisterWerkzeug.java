@@ -97,18 +97,18 @@ public class VormerkMedienauflisterWerkzeug extends ObservableSubWerkzeug
                 entleiher = _verleihService.getEntleiherFuer(medium);
             }
 
-            if (vormerkkarte != null)
-            {
-                vormerkerList = vormerkkarte.getVormerker();
-
-                for (int i = 0; i < vormerkerArr.length; i++)
-                {
-                    if (i < vormerkerList.size())
-                    {
-                        vormerkerArr[i] = vormerkerList.get(i);
-                    }
-                }
-            }
+            //            if (vormerkkarte != null)
+            //            {
+            //                vormerkerList = vormerkkarte.getVormerker();
+            //
+            //                for (int i = 0; i < vormerkerArr.length; i++)
+            //                {
+            //                    if (i < vormerkerList.size())
+            //                    {
+            //                        vormerkerArr[i] = vormerkerList.get(i);
+            //                    }
+            //                }
+            //            }
 
             medienFormatierer
                 .add(new VormerkMedienFormatierer(medium, entleiher,
