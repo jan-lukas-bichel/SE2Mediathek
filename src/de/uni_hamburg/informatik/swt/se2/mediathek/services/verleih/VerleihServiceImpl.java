@@ -309,23 +309,18 @@ public class VerleihServiceImpl extends AbstractObservableService
         return result;
     }
 
-    /**
-     * Setzt neuen Vormerker auf die Vormerker Liste 
-     * falls keine existiert wird eine neue Vormerkkarte erstellt 
-     * 
-     * @param kunde Der Kunde der der Liste Hinzugefügt werden möchte
-     * @param medien Liste an Medien bei denen der Kunde hinzugefügt werden möchte
-     */
-    public void vormerkeFuer(Kunde kunde, List<Medium> medien)
+    @Override
+    public void merkeVor(Kunde kunde, List<Medium> medien)
     {
-        assert medien != null : "Vorbedingung verletzt: medien ist null";
-        assert kunde != null : "Vorbedingung verletzt: kunde ist null";
+        assert medienImBestand(
+                medien) : "Vorbedingung verletzt: medienImBestand(medien)";
+        assert kundeImBestand(
+                kunde) : "Vorbedingung verletzt: kundeImBestand(kunde)";
 
-        boolean exKarte = false;
         for (Medium medium : medien)
         {
-            exKarte = gibtEsVormerkkarteSchon(medium);
-            if (exKarte)
+            if (gibtEsVormerkkarteSchon(medium) && !_vormerkkarten.get(medium)
+                .istVoll())
             {
                 _vormerkkarten.get(medium)
                     .addVormerker(kunde);
@@ -340,6 +335,7 @@ public class VerleihServiceImpl extends AbstractObservableService
     /**
      * Private Hilfsmethode
      * Gibt zurück ob es schon eine Vormerkkarte gibt oder nicht 
+     * 
      * @param medium Das Medium für das geprüft werden soll ob es schon eine Vormerkkarte gibt
      * @return boolean Gibt es eine Vormerkkarte oder nicht 
      */
@@ -427,6 +423,9 @@ public class VerleihServiceImpl extends AbstractObservableService
     @Override
     public boolean istVorgemerkt(Medium medium)
     {
+        assert mediumImBestand(
+                medium) : "Vorbedingung verletzt: mediumImBestand(medium)";
+
         if (_vormerkkarten.get(medium)
             .getVormerker()
             .size() > 0)
@@ -436,11 +435,31 @@ public class VerleihServiceImpl extends AbstractObservableService
         return false;
     }
 
-    @Override
+    /*@Override
     public boolean sindAlleVorgemerkt(List<Medium> medien)
     {
         // TODO Auto-generated method stub
         return false;
+    } */
+
+    @Override
+    public List<Vormerkkarte> getVormerkkartenFuer(Kunde kunde)
+    {
+        assert kundeImBestand(
+                kunde) : "Vorbedingung verletzt: kundeImBestand(kunde) == false";
+
+        List<Vormerkkarte> vormerkkarten = new ArrayList<>();
+
+        for (Vormerkkarte vormerkkarte : _vormerkkarten.values())
+        {
+            if (vormerkkarte.getVormerker()
+                .contains(kunde))
+            {
+                vormerkkarten.add(vormerkkarte);
+            }
+        }
+
+        return vormerkkarten;
     }
 
     @Override
@@ -448,12 +467,6 @@ public class VerleihServiceImpl extends AbstractObservableService
     {
         // TODO Auto-generated method stub
         return _vormerkkarten.get(medium);
-    }
-
-    @Override
-    public void merkeVor(Kunde kunde, Medium medium)
-    {
-        return;
     }
 
     @Override

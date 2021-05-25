@@ -240,16 +240,16 @@ public interface VerleihService extends ObservableService
      */
     boolean istVorgemerkt(Medium medium);
 
-    /**
-     * Prüft ob alle angegebenen Medien vorgemerkt sind.
-     * 
-     * @param medien Eine Liste von Medien.
-     * 
-     * @return true, wenn alle gegebenen Medien vorgemerkt sind, sonst false.
-     * 
-     * @require medienImBestand(medien)
-     */
-    boolean sindAlleVorgemerkt(List<Medium> medien);
+    //    /**
+    //     * Prüft ob alle angegebenen Medien vorgemerkt sind.
+    //     * 
+    //     * @param medien Eine Liste von Medien.
+    //     * 
+    //     * @return true, wenn alle gegebenen Medien vorgemerkt sind, sonst false.
+    //     * 
+    //     * @require medienImBestand(medien)
+    //     */
+    //    boolean sindAlleVorgemerkt(List<Medium> medien);
 
     /**
      * Gibt die Vormerkkarte für das angegebene Medium zurück, oder null wenn
@@ -265,15 +265,27 @@ public interface VerleihService extends ObservableService
     Vormerkkarte getVormerkkarteFuer(Medium medium);
 
     /**
-     * Merkt das Medium für den ausgewählten Kunden vor
+     * Erstellt eine Liste mit allen Vormerkkarten des Kunden
+     * 
+     * @param kunde Der Kunde für den die Vormerkkarten ausgegeben werden sollen.
+     * @return List<Vormerkkarten> Eine Liste aller Vormerkkarten für den Kunden
+     * 
+     * @require kundeImBestand(kunde)
+     * 
+     * @ensure vormerkkarten != null
+     */
+    List<Vormerkkarte> getVormerkkartenFuer(Kunde kunde);
+
+    /**
+     * Merkt die Medien für den ausgewählten Kunden vor
      * 
      * @param medium Medium, das vorgemerkt werden soll
      * @param kunde Kunde, der das Medium vormerken will 
      * 
-     * @require mediumImBestand()
-     * @require kundeImBestand()
+     * @require mediumImBestand(kunde)
+     * @require kundeImBestand(medien)
      */
-    void merkeVor(Kunde kunde, Medium medium);
+    void merkeVor(Kunde kunde, List<Medium> medien);
 
     /**
      * Prüft ob die ausgewählten Medium für den Kunde vorgemerkbar sind

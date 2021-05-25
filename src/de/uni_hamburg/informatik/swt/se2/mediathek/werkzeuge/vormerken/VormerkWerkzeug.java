@@ -248,7 +248,7 @@ public class VormerkWerkzeug
         {
             for (Medium medium : selectedMedien)
             {
-
+                // Du kannst die ganze Liste an Medien direkt übergeben. Gruß Ali
                 _verleihService.merkeVor(selectedKunde, medium);
             }
         }
