@@ -106,19 +106,6 @@ public class VormerkMedienauflisterWerkzeug extends ObservableSubWerkzeug
                 vormerker3 = vormerkkarte.getVormerkerByIndex(2);
             }
 
-            //            if (vormerkkarte != null)
-            //            {
-            //                vormerkerList = vormerkkarte.getVormerker();
-            //
-            //                for (int i = 0; i < vormerkerArr.length; i++)
-            //                {
-            //                    if (i < vormerkerList.size())
-            //                    {
-            //                        vormerkerArr[i] = vormerkerList.get(i);
-            //                    }
-            //                }
-            //            }
-
             medienFormatierer.add(new VormerkMedienFormatierer(medium,
                     entleiher, vormerker1, vormerker2, vormerker3));
         }

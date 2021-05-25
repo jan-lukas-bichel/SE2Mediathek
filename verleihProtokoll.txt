@@ -805,3 +805,29 @@ am 25.5.2021 verliehen an
     Anschrift:
     Abenteuerallee 33
     24104 Kiel
+Tue May 25 16:31:30 CEST 2021: Ausleihe
+CD:
+    Titel: Breakaway
+    Kommentar: Nachfolger vom Album Tankful
+    Interpret: Kelly Clarkson
+    Spiellänge: 87
+am 25.5.2021 verliehen an
+    Kundennummer: 123464
+    Name: Lara Croft
+    Telefon: unbekannt
+    Anschrift:
+    Abenteuerallee 33
+    24104 Kiel
+Tue May 25 16:32:02 CEST 2021: Ausleihe
+CD:
+    Titel: Breakaway
+    Kommentar: Nachfolger vom Album Tankful
+    Interpret: Kelly Clarkson
+    Spiellänge: 87
+am 25.5.2021 verliehen an
+    Kundennummer: 123464
+    Name: Lara Croft
+    Telefon: unbekannt
+    Anschrift:
+    Abenteuerallee 33
+    24104 Kiel
