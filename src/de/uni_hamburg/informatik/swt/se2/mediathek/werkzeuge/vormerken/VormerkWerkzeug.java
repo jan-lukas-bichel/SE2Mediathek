@@ -221,6 +221,7 @@ public class VormerkWerkzeug
             {
                 Vormerkkarte karte = _verleihService
                     .getVormerkkarteFuer(medium);
+                //TODO Kommentar von von Jan: Null-Check einbauen, falls Karte == Null ist
                 if (karte.istVoll())
                 {
                     return false;
@@ -248,7 +249,7 @@ public class VormerkWerkzeug
         {
             for (Medium medium : selectedMedien)
             {
-                // Du kannst die ganze Liste an Medien direkt übergeben. Gruß Ali
+                //TODO Du kannst die ganze Liste an Medien direkt übergeben. Gruß Ali
                 _verleihService.merkeVor(selectedKunde, medium);
             }
         }

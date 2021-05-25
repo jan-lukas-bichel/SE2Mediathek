@@ -23,14 +23,13 @@ public class Vormerkkarte
     {
         _medium = medium;
         _vormerker.add(vormerker);
+
     }
 
     /**
      * Setzt den uebergebenen Kunden ans Ende der Vormerkerliste
      * 
      * @param kunde
-     * 
-     * @ensure kunde == getErsterVormerker || kunde == getZweiterVormerker || kunde == getDritterVormerker
      */
     public void addVormerker(Kunde kunde)
     {
@@ -38,8 +37,14 @@ public class Vormerkkarte
         {
             _vormerker.add(kunde);
         }
+
     }
 
+    /**
+     * Enfernt den uebergebenen Kunden ans Ende der Vormerkerliste
+     * 
+     * @param kunde
+     */
     public void removeVormerker(Kunde kunde)
     {
         for (int i = 0; i < _vormerker.size(); i++)
@@ -65,7 +70,7 @@ public class Vormerkkarte
     }
 
     /**
-     * Gibt Vormerkern an spezifiziertem Index zurück
+     * Gibt Vormerker an spezifiziertem Index zurück
      * 
      * @return Vormerker an spezifiziertem Index
      * 
