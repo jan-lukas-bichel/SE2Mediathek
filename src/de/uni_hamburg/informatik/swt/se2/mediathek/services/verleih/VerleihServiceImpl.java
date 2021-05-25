@@ -117,7 +117,7 @@ public class VerleihServiceImpl extends AbstractObservableService
                 medien) : "Vorbedingung verletzt: medienImBestand(medien)";
 
         return sindAlleNichtVerliehen(medien)
-                && istVerleihenMoeglichVormerker(kunde, medien);
+                && istVormerkenMoeglich(kunde, medien);
     }
 
     @Override
@@ -213,6 +213,8 @@ public class VerleihServiceImpl extends AbstractObservableService
         assert ausleihDatum != null : "Vorbedingung verletzt: ausleihDatum != null";
         assert istVerleihenMoeglich(kunde,
                 medien) : "Vorbedingung verletzt:  istVerleihenMoeglich(kunde, medien)";
+
+        entferneVormerkung(kunde, medien);
 
         for (Medium medium : medien)
         {
@@ -319,46 +321,21 @@ public class VerleihServiceImpl extends AbstractObservableService
 
         for (Medium medium : medien)
         {
-            if (gibtEsVormerkkarteSchon(medium) && !_vormerkkarten.get(medium)
+            if (istVorgemerkt(medium) && !_vormerkkarten.get(medium)
                 .istVoll())
             {
                 _vormerkkarten.get(medium)
                     .addVormerker(kunde);
             }
-            else
+            else if (!istVorgemerkt(medium))
             {
                 _vormerkkarten.put(medium, new Vormerkkarte(kunde, medium));
             }
         }
     }
 
-    /**
-     * Private Hilfsmethode
-     * Gibt zurück ob es schon eine Vormerkkarte gibt oder nicht 
-     * 
-     * @param medium Das Medium für das geprüft werden soll ob es schon eine Vormerkkarte gibt
-     * @return boolean Gibt es eine Vormerkkarte oder nicht 
-     */
-    private boolean gibtEsVormerkkarteSchon(Medium medium)
-    {
-        if (_vormerkkarten.containsKey(medium))
-        {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * Private Hilfsmethode
-     * Gibt zurück ob der Kunde bei allen Medien erster in der Vormerker Liste ist
-     * 
-     * @param kunde Kuunde der die medien ausleihen möchte
-     * @param medien Liste von Medien
-     * @return boolean ist bei allen Medien erster in der Liste
-     */
-    private boolean istVerleihenMoeglichVormerker(Kunde kunde,
-            List<Medium> medien)
+    @Override
+    public boolean istVormerkenMoeglich(Kunde kunde, List<Medium> medien)
     {
         List<Boolean> listeIstAusleihenMoeglich = erstelleListe(kunde, medien);
         boolean istVormerker = false;
@@ -419,29 +396,6 @@ public class VerleihServiceImpl extends AbstractObservableService
         return istErsterPlatz;
     }
 
-    //müssen noch implemnetiert werden
-    @Override
-    public boolean istVorgemerkt(Medium medium)
-    {
-        assert mediumImBestand(
-                medium) : "Vorbedingung verletzt: mediumImBestand(medium)";
-
-        if (_vormerkkarten.get(medium)
-            .getVormerker()
-            .size() > 0)
-        {
-            return true;
-        }
-        return false;
-    }
-
-    /*@Override
-    public boolean sindAlleVorgemerkt(List<Medium> medien)
-    {
-        // TODO Auto-generated method stub
-        return false;
-    } */
-
     @Override
     public List<Vormerkkarte> getVormerkkartenFuer(Kunde kunde)
     {
@@ -464,38 +418,99 @@ public class VerleihServiceImpl extends AbstractObservableService
 
     @Override
     public Vormerkkarte getVormerkkarteFuer(Medium medium)
+            throws NullPointerException
     {
-        // TODO Auto-generated method stub
-        return _vormerkkarten.get(medium);
+        assert mediumImBestand(
+                medium) : "Vorbedingung verletzt: mediumImBestand(medium)";
+
+        if (istVorgemerkt(medium))
+        {
+            return _vormerkkarten.get(medium);
+        }
+        return null;
     }
 
     @Override
-    public boolean istVormerkenMoeglich(Kunde kunde, List<Medium> medien)
+    public void entferneVormerkung(Kunde kunde, List<Medium> medien)
     {
-        assert medien != null : "Vorbedingung verletzt: medien ist null";
-        assert kunde != null : "Vorbedingung verletzt: kunde ist null";
+        assert kundeImBestand(
+                kunde) : "Vorbedingung verletzt: kundeImBestand(kunde)";
+        assert medienImBestand(
+                medien) : "Vorbedingung verletzt: medienImBestand(medien)";
 
+        if (sindAlleVorgemerkt(medien))
+        {
+            for (Medium medium : medien)
+            {
+                _vormerkkarten.get(medium)
+                    .removeVormerker(kunde);
+            }
+        }
+
+    }
+
+    @Override
+    public boolean istVorgemerkt(Medium medium)
+    {
+        assert mediumImBestand(
+                medium) : "Vorbedingung verletzt: mediumImBestand(medium)";
+
+        if (_vormerkkarten.containsKey(medium))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    @Override
+    public boolean istNichtVorgemerkt(Medium medium)
+    {
+        assert mediumImBestand(
+                medium) : "Vorbedingung verletzt: mediumImBestand(medium)";
+
+        if (_vormerkkarten.containsKey(medium))
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public boolean sindAlleNichtVorgemerkt(List<Medium> medien)
+    {
+        assert medienImBestand(
+                medien) : "Vorbedingung verletzt: medienImBestand(medien)";
         for (Medium medium : medien)
         {
-            //Check ob Vormerkliste voll ist
-            if (_vormerkkarten.get(medium)
-                .istVoll())
+            if (istVorgemerkt(medium))
             {
                 return false;
             }
-
-            //Check ob der Kunde schon auf der Vormerkliste ist
-            for (Kunde vormerker : _vormerkkarten.get(medium)
-                .getVormerker())
-            {
-                if (vormerker == kunde)
-                {
-                    return false;
-                }
-            }
         }
-        //Sonst ist vormerken möglich
         return true;
     }
+
+    @Override
+    public boolean sindAlleVorgemerkt(List<Medium> medien)
+    {
+        assert medienImBestand(
+                medien) : "Vorbedingung verletzt: medienImBestand(medien)";
+        for (Medium medium : medien)
+        {
+            if (!istVorgemerkt(medium))
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /* @Override
+    public Kunde getVormerkerFuerMedium(Medium  )
+    {
+        
+    }*/
 
 }
