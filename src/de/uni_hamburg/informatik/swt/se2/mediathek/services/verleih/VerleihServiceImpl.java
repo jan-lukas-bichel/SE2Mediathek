@@ -105,7 +105,6 @@ public class VerleihServiceImpl extends AbstractObservableService
         return _verleihkarten.get(medium) != null;
     }
 
-    // Verändert!
     @Override
     public boolean istVerleihenMoeglich(Kunde kunde, List<Medium> medien)
     {
@@ -356,7 +355,6 @@ public class VerleihServiceImpl extends AbstractObservableService
 
     @Override
     public Vormerkkarte getVormerkkarteFuer(Medium medium)
-            throws NullPointerException
     {
         assert mediumImBestand(
                 medium) : "Vorbedingung verletzt: mediumImBestand(medium)";

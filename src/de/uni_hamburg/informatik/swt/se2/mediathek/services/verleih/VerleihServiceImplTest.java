@@ -77,14 +77,19 @@ public class VerleihServiceImplTest
         // nicht verliehenen Medien an
         List<Medium> verlieheneMedien = _medienListe.subList(0, 2);
         List<Medium> nichtVerlieheneMedien = _medienListe.subList(2, 4);
+
         _service.merkeVor(_kunde, verlieheneMedien);
+        // Prüft ob die Medien Vorgemerkt sind
+        assertTrue(_service.istVorgemerkt(verlieheneMedien.get(0)));
+        assertTrue(_service.istVorgemerkt(verlieheneMedien.get(1)));
+
         _service.verleiheAn(_kunde, verlieheneMedien, _datum);
 
         //Prüft ob die verliehnenMedien noch vorgemerkt sind
-        assertTrue(_service.istVorgemerkt(verlieheneMedien.get(0)));
-        assertTrue(_service.istVorgemerkt(verlieheneMedien.get(1)));
-        assertFalse(_service.istNichtVorgemerkt(verlieheneMedien.get(0)));
-        assertFalse(_service.istNichtVorgemerkt(verlieheneMedien.get(1)));
+        assertFalse(_service.istVorgemerkt(verlieheneMedien.get(0)));
+        assertFalse(_service.istVorgemerkt(verlieheneMedien.get(1)));
+        assertTrue(_service.istNichtVorgemerkt(verlieheneMedien.get(0)));
+        assertTrue(_service.istNichtVorgemerkt(verlieheneMedien.get(1)));
         // Prüfe, ob alle sondierenden Operationen für das Vertragsmodell
         // funktionieren
         assertTrue(_service.istVerliehen(verlieheneMedien.get(0)));
@@ -162,6 +167,8 @@ public class VerleihServiceImplTest
     {
         List<Medium> vorgemerkteMedien = _medienListe.subList(0, 2);
         List<Medium> nichtVorgemerkteMedien = _medienListe.subList(2, 4);
+
+        // Prüft ob merkeVor richtig Arbeitet
         _service.merkeVor(_kunde, vorgemerkteMedien);
         assertTrue(_service.sindAlleVorgemerkt(vorgemerkteMedien));
         assertFalse(_service.sindAlleVorgemerkt(nichtVorgemerkteMedien));
@@ -172,9 +179,50 @@ public class VerleihServiceImplTest
         assertFalse(_service.istVorgemerkt(nichtVorgemerkteMedien.get(0)));
         assertFalse(_service.istVorgemerkt(nichtVorgemerkteMedien.get(1)));
         assertFalse(_service.sindAlleVorgemerkt(_medienListe));
-        assertFalse(_service.sindAlleVorgemerkt(_medienListe));
-        assertEquals(vorgemerkteMedien, _service.getVormerkkartenFuer(_kunde));
+        assertFalse(_service.sindAlleNichtVorgemerkt(_medienListe));
+        assertEquals(_service.getErsterVormerker(vorgemerkteMedien.get(0)),
+                _service.getVormerkkarteFuer(vorgemerkteMedien.get(0))
+                    .getVormerkerByIndex(0));
+        assertEquals(_service.getErsterVormerker(vorgemerkteMedien.get(1)),
+                _service.getVormerkkarteFuer(vorgemerkteMedien.get(0))
+                    .getVormerkerByIndex(0));
 
+        // Prüft ob entferneVormerkung richtig Arbeitet
+        _service.entferneVormerkung(_kunde, vorgemerkteMedien);
+        assertTrue(_service.sindAlleNichtVorgemerkt(vorgemerkteMedien));
+        assertFalse(_service.sindAlleVorgemerkt(vorgemerkteMedien));
+        assertFalse(_service.istVorgemerkt(vorgemerkteMedien.get(0)));
+        assertFalse(_service.istVorgemerkt(vorgemerkteMedien.get(1)));
+
+    }
+
+    @Test
+    public void testVormerkEreignisBeobachter() throws ProtokollierException
+    {
+        final boolean ereignisse[] = new boolean[1];
+        ereignisse[0] = false;
+        ServiceObserver beobachter = new ServiceObserver()
+        {
+            @Override
+            public void reagiereAufAenderung()
+            {
+                ereignisse[0] = true;
+            }
+        };
+        _service.merkeVor(_kunde,
+                Collections.singletonList(_medienListe.get(0)));
+        assertFalse(ereignisse[0]);
+
+        _service.registriereBeobachter(beobachter);
+        _service.merkeVor(_kunde,
+                Collections.singletonList(_medienListe.get(1)));
+        assertTrue(ereignisse[0]);
+
+        _service.entferneBeobachter(beobachter);
+        ereignisse[0] = false;
+        _service.merkeVor(_kunde,
+                Collections.singletonList(_medienListe.get(2)));
+        assertFalse(ereignisse[0]);
     }
 
 }
