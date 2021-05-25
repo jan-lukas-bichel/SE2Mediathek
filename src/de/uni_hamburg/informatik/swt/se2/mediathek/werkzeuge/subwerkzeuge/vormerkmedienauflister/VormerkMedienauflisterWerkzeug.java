@@ -74,7 +74,7 @@ public class VormerkMedienauflisterWerkzeug extends ObservableSubWerkzeug
     /**
      * Holt und setzt die Medieninformationen.
      */
-    private void setzeAnzuzeigendeMedien()
+    public void setzeAnzuzeigendeMedien()
     {
         List<Medium> medienListe = _medienbestand.getMedien();
         List<VormerkMedienFormatierer> medienFormatierer = new ArrayList<VormerkMedienFormatierer>();

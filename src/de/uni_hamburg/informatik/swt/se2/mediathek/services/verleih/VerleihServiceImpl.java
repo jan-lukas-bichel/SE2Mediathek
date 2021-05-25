@@ -5,8 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.swing.JOptionPane;
-
 import de.uni_hamburg.informatik.swt.se2.mediathek.fachwerte.Datum;
 import de.uni_hamburg.informatik.swt.se2.mediathek.materialien.Kunde;
 import de.uni_hamburg.informatik.swt.se2.mediathek.materialien.Verleihkarte;
@@ -116,8 +114,8 @@ public class VerleihServiceImpl extends AbstractObservableService
         assert medienImBestand(
                 medien) : "Vorbedingung verletzt: medienImBestand(medien)";
 
-        return sindAlleNichtVerliehen(medien)
-                && istVormerkenMoeglich(kunde, medien);
+        return sindAlleNichtVerliehen(medien);
+        //&& istVormerkenMoeglich(kunde, medien);
     }
 
     @Override
@@ -334,38 +332,38 @@ public class VerleihServiceImpl extends AbstractObservableService
         }
     }
 
-    @Override
-    public boolean istVormerkenMoeglich(Kunde kunde, List<Medium> medien)
-    {
-        List<Boolean> listeIstAusleihenMoeglich = erstelleListe(kunde, medien);
-        boolean istVormerker = false;
-        int i;
-
-        for (i = 0; i < listeIstAusleihenMoeglich.size(); i++)
-        {
-            if (listeIstAusleihenMoeglich.get(i) == true)
-            {
-                istVormerker = true;
-            }
-            else
-            {
-                istVormerker = false;
-                continue;
-            }
-        }
-
-        if (!istVormerker)
-        {
-            JOptionPane.showMessageDialog(null, "Ausleihen von: "
-                    + medien.get(i)
-                        .getMedienBezeichnung()
-                    + " nicht möglich da, Sie nicht erster Platz in der Vormerker Liste sind",
-                    "Ausleihen nicht möglich", JOptionPane.ERROR_MESSAGE);
-            return false;
-        }
-
-        return true;
-    }
+    //    @Override
+    //    public boolean istVormerkenMoeglich(Kunde kunde, List<Medium> medien)
+    //    {
+    //        List<Boolean> listeIstAusleihenMoeglich = erstelleListe(kunde, medien);
+    //        boolean istVormerker = false;
+    //        int i;
+    //
+    //        for (i = 0; i < listeIstAusleihenMoeglich.size(); i++)
+    //        {
+    //            if (listeIstAusleihenMoeglich.get(i) == true)
+    //            {
+    //                istVormerker = true;
+    //            }
+    //            else
+    //            {
+    //                istVormerker = false;
+    //                continue;
+    //            }
+    //        }
+    //
+    //        if (!istVormerker)
+    //        {
+    //            JOptionPane.showMessageDialog(null, "Ausleihen von: "
+    //                    + medien.get(i)
+    //                        .getMedienBezeichnung()
+    //                    + " nicht möglich da, Sie nicht erster Platz in der Vormerker Liste sind",
+    //                    "Ausleihen nicht möglich", JOptionPane.ERROR_MESSAGE);
+    //            return false;
+    //        }
+    //
+    //        return true;
+    //    }
 
     /**
      * Private Hilfsmethode
@@ -375,26 +373,26 @@ public class VerleihServiceImpl extends AbstractObservableService
      * @param medien Liste von Medien
      * @return List<Boolean> mit Werten die aussagen bei welchen Medien ausleihen möglich ist
      */
-    private List<Boolean> erstelleListe(Kunde kunde, List<Medium> medien)
-    {
-        List<Boolean> istErsterPlatz = new ArrayList<Boolean>();
-
-        for (Medium medium : medien)
-        {
-            Vormerkkarte vormerk = _vormerkkarten.get(medium);
-            if (vormerk == null || vormerk.getVormerkerByIndex(0)
-                .equals(kunde))
-            {
-                istErsterPlatz.add(true);
-            }
-            else
-            {
-                istErsterPlatz.add(false);
-            }
-        }
-
-        return istErsterPlatz;
-    }
+    //    private List<Boolean> erstelleListe(Kunde kunde, List<Medium> medien)
+    //    {
+    //        List<Boolean> istErsterPlatz = new ArrayList<Boolean>();
+    //
+    //        for (Medium medium : medien)
+    //        {
+    //            Vormerkkarte vormerk = _vormerkkarten.get(medium);
+    //            if (vormerk == null || vormerk.getVormerkerByIndex(0)
+    //                .equals(kunde))
+    //            {
+    //                istErsterPlatz.add(true);
+    //            }
+    //            else
+    //            {
+    //                istErsterPlatz.add(false);
+    //            }
+    //        }
+    //
+    //        return istErsterPlatz;
+    //    }
 
     @Override
     public List<Vormerkkarte> getVormerkkartenFuer(Kunde kunde)

@@ -287,20 +287,20 @@ public interface VerleihService extends ObservableService
      */
     void merkeVor(Kunde kunde, List<Medium> medien);
 
-    /**
-     * Prüft ob die ausgewählten Medien für den Kunde vorgemerkbar sind
-     * 
-     * @param kunde Der Kunde für den geprüft werden soll
-     * @param medien Die medien
-     * 
-     * 
-     * @return true, wenn das Vormerken für diesen Kunden möglich ist, sonst
-     *         false
-     * 
-     * @require kundeImBestand(kunde)
-     * @require medienImBestand(medien)
-     */
-    boolean istVormerkenMoeglich(Kunde kunde, List<Medium> medien);
+    //    /**
+    //     * Prüft ob die ausgewählten Medien für den Kunde vorgemerkbar sind
+    //     * 
+    //     * @param kunde Der Kunde für den geprüft werden soll
+    //     * @param medien Die medien
+    //     * 
+    //     * 
+    //     * @return true, wenn das Vormerken für diesen Kunden möglich ist, sonst
+    //     *         false
+    //     * 
+    //     * @require kundeImBestand(kunde)
+    //     * @require medienImBestand(medien)
+    //     */
+    //    boolean istVormerkenMoeglich(Kunde kunde, List<Medium> medien);
 
     /**
      * Prüft ob das Medium nicht vorgemerkt ist
