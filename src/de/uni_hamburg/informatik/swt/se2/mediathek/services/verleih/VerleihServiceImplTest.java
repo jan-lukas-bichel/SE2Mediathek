@@ -70,14 +70,21 @@ public class VerleihServiceImplTest
     }
 
     @Test
-    public void testeVerleihUndRueckgabeVonMedien() throws Exception
+    public void testeVerleihUndRueckgabeVonMedienUndEntfernenVonVormerklisteDurchAusleihen()
+            throws Exception
     {
         // Lege eine Liste mit nur verliehenen und eine Liste mit ausschließlich
         // nicht verliehenen Medien an
         List<Medium> verlieheneMedien = _medienListe.subList(0, 2);
         List<Medium> nichtVerlieheneMedien = _medienListe.subList(2, 4);
+        _service.merkeVor(_kunde, verlieheneMedien);
         _service.verleiheAn(_kunde, verlieheneMedien, _datum);
 
+        //Prüft ob die verliehnenMedien noch vorgemerkt sind
+        assertTrue(_service.istVorgemerkt(verlieheneMedien.get(0)));
+        assertTrue(_service.istVorgemerkt(verlieheneMedien.get(1)));
+        assertFalse(_service.istNichtVorgemerkt(verlieheneMedien.get(0)));
+        assertFalse(_service.istNichtVorgemerkt(verlieheneMedien.get(1)));
         // Prüfe, ob alle sondierenden Operationen für das Vertragsmodell
         // funktionieren
         assertTrue(_service.istVerliehen(verlieheneMedien.get(0)));
@@ -148,6 +155,26 @@ public class VerleihServiceImplTest
         _service.verleiheAn(_kunde,
                 Collections.singletonList(_medienListe.get(2)), _datum);
         assertFalse(ereignisse[0]);
+    }
+
+    @Test
+    public void testeVormerkenUndEntfernenVonVormerken() throws Exception
+    {
+        List<Medium> vorgemerkteMedien = _medienListe.subList(0, 2);
+        List<Medium> nichtVorgemerkteMedien = _medienListe.subList(2, 4);
+        _service.merkeVor(_kunde, vorgemerkteMedien);
+        assertTrue(_service.sindAlleVorgemerkt(vorgemerkteMedien));
+        assertFalse(_service.sindAlleVorgemerkt(nichtVorgemerkteMedien));
+        assertTrue(_service.sindAlleNichtVorgemerkt(nichtVorgemerkteMedien));
+        assertFalse(_service.sindAlleNichtVorgemerkt(vorgemerkteMedien));
+        assertTrue(_service.istVorgemerkt(vorgemerkteMedien.get(0)));
+        assertTrue(_service.istVorgemerkt(vorgemerkteMedien.get(1)));
+        assertFalse(_service.istVorgemerkt(nichtVorgemerkteMedien.get(0)));
+        assertFalse(_service.istVorgemerkt(nichtVorgemerkteMedien.get(1)));
+        assertFalse(_service.sindAlleVorgemerkt(_medienListe));
+        assertFalse(_service.sindAlleVorgemerkt(_medienListe));
+        assertEquals(vorgemerkteMedien, _service.getVormerkkartenFuer(_kunde));
+
     }
 
 }
