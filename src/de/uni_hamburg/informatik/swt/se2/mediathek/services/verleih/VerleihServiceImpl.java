@@ -334,68 +334,6 @@ public class VerleihServiceImpl extends AbstractObservableService
         informiereUeberAenderung();
     }
 
-    //    @Override
-    //    public boolean istVormerkenMoeglich(Kunde kunde, List<Medium> medien)
-    //    {
-    //        List<Boolean> listeIstAusleihenMoeglich = erstelleListe(kunde, medien);
-    //        boolean istVormerker = false;
-    //        int i;
-    //
-    //        for (i = 0; i < listeIstAusleihenMoeglich.size(); i++)
-    //        {
-    //            if (listeIstAusleihenMoeglich.get(i) == true)
-    //            {
-    //                istVormerker = true;
-    //            }
-    //            else
-    //            {
-    //                istVormerker = false;
-    //                continue;
-    //            }
-    //        }
-    //
-    //        if (!istVormerker)
-    //        {
-    //            JOptionPane.showMessageDialog(null, "Ausleihen von: "
-    //                    + medien.get(i)
-    //                        .getMedienBezeichnung()
-    //                    + " nicht möglich da, Sie nicht erster Platz in der Vormerker Liste sind",
-    //                    "Ausleihen nicht möglich", JOptionPane.ERROR_MESSAGE);
-    //            return false;
-    //        }
-    //
-    //        return true;
-    //    }
-
-    /**
-     * Private Hilfsmethode
-     * Erstellt liste mit boolean Werten die aussagen bei welchen Medien ausleihen möglich wäre
-     * 
-     * @param kunde Kuunde der die medien ausleihen möchte
-     * @param medien Liste von Medien
-     * @return List<Boolean> mit Werten die aussagen bei welchen Medien ausleihen möglich ist
-     */
-    //    private List<Boolean> erstelleListe(Kunde kunde, List<Medium> medien)
-    //    {
-    //        List<Boolean> istErsterPlatz = new ArrayList<Boolean>();
-    //
-    //        for (Medium medium : medien)
-    //        {
-    //            Vormerkkarte vormerk = _vormerkkarten.get(medium);
-    //            if (vormerk == null || vormerk.getVormerkerByIndex(0)
-    //                .equals(kunde))
-    //            {
-    //                istErsterPlatz.add(true);
-    //            }
-    //            else
-    //            {
-    //                istErsterPlatz.add(false);
-    //            }
-    //        }
-    //
-    //        return istErsterPlatz;
-    //    }
-
     @Override
     public List<Vormerkkarte> getVormerkkartenFuer(Kunde kunde)
     {

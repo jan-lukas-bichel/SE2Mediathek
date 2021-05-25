@@ -218,10 +218,13 @@ public class AusleihWerkzeug
 
         for (Medium medium : medien)
         {
-            if (!_verleihService.getErsterVormerker(medium)
-                .equals(kunde))
+            if (_verleihService.istVorgemerkt(medium))
             {
-                return false;
+                if (!_verleihService.getErsterVormerker(medium)
+                    .equals(kunde))
+                {
+                    return false;
+                }
             }
         }
 
