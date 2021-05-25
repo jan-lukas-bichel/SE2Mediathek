@@ -438,14 +438,26 @@ public class VerleihServiceImpl extends AbstractObservableService
         assert medienImBestand(
                 medien) : "Vorbedingung verletzt: medienImBestand(medien)";
 
-        if (sindAlleVorgemerkt(medien))
+        for (Medium medium : medien)
         {
-            for (Medium medium : medien)
+            if (istVorgemerkt(medium))
             {
-                _vormerkkarten.get(medium)
-                    .removeVormerker(kunde);
+
+                if (_vormerkkarten.get(medium)
+                    .getVormerker()
+                    .size() > 1)
+                {
+                    _vormerkkarten.get(medium)
+                        .removeVormerker(kunde);
+                }
+                else
+                {
+                    _vormerkkarten.remove(medium);
+                }
             }
         }
+
+        informiereUeberAenderung();
 
     }
 
@@ -507,10 +519,14 @@ public class VerleihServiceImpl extends AbstractObservableService
         return true;
     }
 
-    /* @Override
-    public Kunde getVormerkerFuerMedium(Medium  )
+    @Override
+    public Kunde getErsterVormerker(Medium medium)
     {
-        
-    }*/
+        assert mediumImBestand(
+                medium) : "Vorbedingung verletzt: mediumImBestand(medium)";
+
+        return _vormerkkarten.get(medium)
+            .getVormerkerByIndex(0);
+    }
 
 }

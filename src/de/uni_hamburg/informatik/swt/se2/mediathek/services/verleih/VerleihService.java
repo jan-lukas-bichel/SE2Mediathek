@@ -333,4 +333,14 @@ public interface VerleihService extends ObservableService
      */
     void entferneVormerkung(Kunde kunde, List<Medium> medien);
 
+    /**
+     * Gibt den ersten Vormerker zurück
+     * 
+     * @param medium Das Medium 
+     * @return Den ersten Vormerker der Liste
+     * 
+     * @require mediumImBestand(medium)
+     */
+    Kunde getErsterVormerker(Medium medium);
+
 }
