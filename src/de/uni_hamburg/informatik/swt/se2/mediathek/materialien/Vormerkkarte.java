@@ -22,8 +22,7 @@ public class Vormerkkarte
     public Vormerkkarte(Kunde vormerker, Medium medium)
     {
         _medium = medium;
-        _vormerker.add(vormerker);
-
+        addVormerker(vormerker);
     }
 
     /**
@@ -33,6 +32,7 @@ public class Vormerkkarte
      */
     public void addVormerker(Kunde kunde)
     {
+
         if (!istVoll())
         {
             if (!_vormerker.contains(kunde))
@@ -81,7 +81,11 @@ public class Vormerkkarte
      */
     public Kunde getVormerkerByIndex(int index)
     {
-        return _vormerker.get(index);
+        if (index < _vormerker.size())
+        {
+            return _vormerker.get(index);
+        }
+        return null;
     }
 
     /**

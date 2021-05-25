@@ -87,7 +87,9 @@ public class VormerkMedienauflisterWerkzeug extends ObservableSubWerkzeug
             // die Namen des Entleihers und der möglichen 3 Vormerker.
 
             Kunde entleiher = null;
-            Kunde[] vormerkerArr = new Kunde[3];
+            Kunde vormerker1 = null;
+            Kunde vormerker2 = null;
+            Kunde vormerker3 = null;
             ArrayList<Kunde> vormerkerList;
             Vormerkkarte vormerkkarte = _verleihService
                 .getVormerkkarteFuer(medium);
@@ -95,6 +97,13 @@ public class VormerkMedienauflisterWerkzeug extends ObservableSubWerkzeug
             if (_verleihService.istVerliehen(medium))
             {
                 entleiher = _verleihService.getEntleiherFuer(medium);
+            }
+
+            if (vormerkkarte != null)
+            {
+                vormerker1 = vormerkkarte.getVormerkerByIndex(0);
+                vormerker2 = vormerkkarte.getVormerkerByIndex(1);
+                vormerker2 = vormerkkarte.getVormerkerByIndex(2);
             }
 
             //            if (vormerkkarte != null)
@@ -110,9 +119,8 @@ public class VormerkMedienauflisterWerkzeug extends ObservableSubWerkzeug
             //                }
             //            }
 
-            medienFormatierer
-                .add(new VormerkMedienFormatierer(medium, entleiher,
-                        vormerkerArr[0], vormerkerArr[1], vormerkerArr[2]));
+            medienFormatierer.add(new VormerkMedienFormatierer(medium,
+                    entleiher, vormerker1, vormerker2, vormerker3));
         }
         _ui.getMedienAuflisterTableModel()
             .setMedien(medienFormatierer);
