@@ -43,8 +43,6 @@ public class Vormerkkarte
 
     }
 
-    }
-
     /**
      * Enfernt den uebergebenen Kunden ans Ende der Vormerkerliste
      * 
