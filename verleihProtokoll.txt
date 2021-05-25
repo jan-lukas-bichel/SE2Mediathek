@@ -766,3 +766,16 @@ am 2.4.2021 verliehen an
     Anschrift:
     Kannenweg 23
     21868 Stade
+Tue May 25 15:32:30 CEST 2021: Ausleihe
+CD:
+    Titel: Breakaway
+    Kommentar: Nachfolger vom Album Tankful
+    Interpret: Kelly Clarkson
+    Spiellänge: 87
+am 25.5.2021 verliehen an
+    Kundennummer: 123465
+    Name: John. J. Ava
+    Telefon: unbekannt
+    Anschrift:
+    Wurtstrasse 23
+    58507 Köln
