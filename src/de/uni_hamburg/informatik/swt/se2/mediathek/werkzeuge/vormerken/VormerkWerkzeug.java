@@ -225,6 +225,13 @@ public class VormerkWerkzeug
                 {
                     return true;
                 }
+
+                if (karte.getVormerker()
+                    .contains(kunde))
+                {
+                    return false;
+                }
+
                 if (karte.istVoll())
                 {
                     return false;
