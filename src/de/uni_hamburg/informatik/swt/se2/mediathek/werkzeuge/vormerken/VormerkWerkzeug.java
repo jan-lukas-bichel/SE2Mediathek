@@ -161,7 +161,7 @@ public class VormerkWerkzeug
                 public void actionPerformed(ActionEvent e)
                 {
                     merkeAusgewaehlteMedienVor();
-                    _medienAuflisterWerkzeug.setzeAnzuzeigendeMedien();
+
                 }
             });
     }

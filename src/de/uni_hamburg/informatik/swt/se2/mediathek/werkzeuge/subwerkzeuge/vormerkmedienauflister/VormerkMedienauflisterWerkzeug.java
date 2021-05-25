@@ -74,7 +74,7 @@ public class VormerkMedienauflisterWerkzeug extends ObservableSubWerkzeug
     /**
      * Holt und setzt die Medieninformationen.
      */
-    public void setzeAnzuzeigendeMedien()
+    private void setzeAnzuzeigendeMedien()
     {
         List<Medium> medienListe = _medienbestand.getMedien();
         List<VormerkMedienFormatierer> medienFormatierer = new ArrayList<VormerkMedienFormatierer>();
@@ -103,7 +103,7 @@ public class VormerkMedienauflisterWerkzeug extends ObservableSubWerkzeug
             {
                 vormerker1 = vormerkkarte.getVormerkerByIndex(0);
                 vormerker2 = vormerkkarte.getVormerkerByIndex(1);
-                vormerker2 = vormerkkarte.getVormerkerByIndex(2);
+                vormerker3 = vormerkkarte.getVormerkerByIndex(2);
             }
 
             //            if (vormerkkarte != null)

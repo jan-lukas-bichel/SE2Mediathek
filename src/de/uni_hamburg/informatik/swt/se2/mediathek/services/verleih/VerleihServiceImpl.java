@@ -330,6 +330,8 @@ public class VerleihServiceImpl extends AbstractObservableService
                 _vormerkkarten.put(medium, new Vormerkkarte(kunde, medium));
             }
         }
+
+        informiereUeberAenderung();
     }
 
     //    @Override
