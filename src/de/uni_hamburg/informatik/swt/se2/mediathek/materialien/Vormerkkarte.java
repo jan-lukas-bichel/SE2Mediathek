@@ -88,6 +88,7 @@ public class Vormerkkarte
      * 
      * @ensure result == true, wenn 3 Vormerker für das Medium eingetragen sind
      */
+    // Hier kommt beim durchführen eine Null Pointer exception musst du denke ich thrown Gruß Ali
     public boolean istVoll()
     {
         if (_vormerker.size() >= _maxVormerkerAnzahl)

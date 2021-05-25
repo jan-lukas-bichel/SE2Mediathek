@@ -230,19 +230,6 @@ public interface VerleihService extends ObservableService
     Verleihkarte getVerleihkarteFuer(Medium medium);
 
     /**
-     * Gibt den ersten Vormerker für das angegebene Medium zurück
-     * 
-     * @param medium ein Medium
-     * @return den ersten Vormerker für das angegebene Medium
-     * 
-     * @require istVorgemerkt(medium)
-     * 
-     * @ensure result != null
-     * 
-     */
-    Kunde getErsterVormerkerFuer(Medium medium);
-
-    /**
      * Prüft ob das angegebene Medium vorgemerkt ist.
      * 
      * @param medium Ein Medium, für das geprüft werden soll ob es vorgemerkt
