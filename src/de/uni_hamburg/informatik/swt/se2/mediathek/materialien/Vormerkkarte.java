@@ -35,8 +35,13 @@ public class Vormerkkarte
     {
         if (!istVoll())
         {
-            _vormerker.add(kunde);
+            if (!_vormerker.contains(kunde))
+            {
+                _vormerker.add(kunde);
+            }
         }
+
+    }
 
     }
 
