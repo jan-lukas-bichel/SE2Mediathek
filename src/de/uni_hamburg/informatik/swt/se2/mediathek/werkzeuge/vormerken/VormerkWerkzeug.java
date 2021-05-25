@@ -221,11 +221,10 @@ public class VormerkWerkzeug
             {
                 Vormerkkarte karte = _verleihService
                     .getVormerkkarteFuer(medium);
-                if (karte == null)
+                if (karte == null) //null check
                 {
                     return false;
                 }
-                //TODO Kommentar von von Jan: Null-Check einbauen, falls Karte == Null ist
                 if (karte.istVoll())
                 {
                     return false;
