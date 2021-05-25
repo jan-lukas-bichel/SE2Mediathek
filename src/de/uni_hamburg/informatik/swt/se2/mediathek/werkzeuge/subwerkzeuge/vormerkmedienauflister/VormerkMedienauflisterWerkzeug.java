@@ -90,22 +90,23 @@ public class VormerkMedienauflisterWerkzeug extends ObservableSubWerkzeug
             Kunde vormerker1 = null;
             Kunde vormerker2 = null;
             Kunde vormerker3 = null;
-            ArrayList<Kunde> vormerkerList;
+            //ArrayList<Kunde> vormerkerList;
             Vormerkkarte vormerkkarte = _verleihService
                 .getVormerkkarteFuer(medium);
 
+            //wenn verliehen dann entleiher herausfinden für medium
             if (_verleihService.istVerliehen(medium))
             {
                 entleiher = _verleihService.getEntleiherFuer(medium);
             }
-
+            //wenn vormerkkarte nicht null ist die einzelnen vormerker setzen
             if (vormerkkarte != null)
             {
                 vormerker1 = vormerkkarte.getVormerkerByIndex(0);
                 vormerker2 = vormerkkarte.getVormerkerByIndex(1);
                 vormerker3 = vormerkkarte.getVormerkerByIndex(2);
             }
-
+            //vormerker anzeigen
             medienFormatierer.add(new VormerkMedienFormatierer(medium,
                     entleiher, vormerker1, vormerker2, vormerker3));
         }

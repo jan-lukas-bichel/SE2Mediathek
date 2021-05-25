@@ -216,15 +216,15 @@ public class AusleihWerkzeug
         // Medien nur vom ersten Vormerker ausgeliehen werden können, gemäß
         // Anforderung d).
 
+        //für alle Medien soll geguckt werden, ob diese vorgemerkt sind und ob 
+        //der erste Vormerker auch die Person ist, die ein medium ausleihen möchte
         for (Medium medium : medien)
         {
-            if (_verleihService.istVorgemerkt(medium))
+            if (_verleihService.istVorgemerkt(medium)
+                    && !_verleihService.getErsterVormerker(medium)
+                        .equals(kunde))
             {
-                if (!_verleihService.getErsterVormerker(medium)
-                    .equals(kunde))
-                {
-                    return false;
-                }
+                return false;
             }
         }
 

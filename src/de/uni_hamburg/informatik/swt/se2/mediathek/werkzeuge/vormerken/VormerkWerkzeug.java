@@ -214,6 +214,7 @@ public class VormerkWerkzeug
         // TODO für Aufgabenblatt 6 (nicht löschen): Prüfung muss noch eingebaut
         // werden. Ist dies korrekt imlpementiert, wird der Vormerk-Button gemäß
         // der Anforderungen a), b), c) und e) aktiviert.
+
         boolean vormerkenMoeglich = (kunde != null) && !medien.isEmpty(); //erst die Grundbedingung rausfinden
         //dann wenn das passt, dann...
         if (vormerkenMoeglich == true)
@@ -222,18 +223,18 @@ public class VormerkWerkzeug
             {
                 Vormerkkarte karte = _verleihService
                     .getVormerkkarteFuer(medium);
-                if (karte == null) //null check
+                if (karte == null) //karte darf nicht null sein
                 {
                     return true;
                 }
 
                 if (karte.getVormerker()
-                    .contains(kunde))
+                    .contains(kunde)) //eine person darf nur einmal vormerken
                 {
                     return false;
                 }
 
-                if (karte.istVoll())
+                if (karte.istVoll()) //nur drei personen dürfen insgesamt vormerken
                 {
                     return false;
                 }
@@ -255,7 +256,7 @@ public class VormerkWerkzeug
             .getSelectedMedien();
         Kunde selectedKunde = _kundenAuflisterWerkzeug.getSelectedKunde();
         // TODO für Aufgabenblatt 6 (nicht löschen): Vormerken einbauen
-
+        //wenn vormerken möglich dann kann vorgemerkt werden
         if (istVormerkenMoeglich())
         {
 
