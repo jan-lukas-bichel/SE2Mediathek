@@ -247,11 +247,9 @@ public class VormerkWerkzeug
 
         if (istVormerkenMoeglich())
         {
-            for (Medium medium : selectedMedien)
-            {
-                //TODO Du kannst die ganze Liste an Medien direkt übergeben. Gruß Ali
-                _verleihService.merkeVor(selectedKunde, medium);
-            }
+
+            _verleihService.merkeVor(selectedKunde, selectedMedien);
+
         }
 
     }
