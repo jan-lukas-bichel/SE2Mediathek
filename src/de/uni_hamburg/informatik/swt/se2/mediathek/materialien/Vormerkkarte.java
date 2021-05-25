@@ -52,9 +52,9 @@ public class Vormerkkarte
     }
 
     /**
-     * Gibt die Länge der Schlange von Vormerkern zurück
+     * Gibt eine List-Array mit allen Vormerkern zurück
      * 
-     * @return die Anzahl der Vormerker des Mediums
+     * @return List-Array mit allen Vormerkern
      * 
      * @ensure result = _vormerker
      * @ensure result.size() >= _maxVormerkerAnzahl;
@@ -64,6 +64,13 @@ public class Vormerkkarte
         return _vormerker;
     }
 
+    /**
+     * Gibt Vormerkern an spezifiziertem Index zurück
+     * 
+     * @return Vormerker an spezifiziertem Index
+     * 
+     * @ensure result = _vormerker.get(index)
+     */
     public Kunde getVormerkerByIndex(int index)
     {
         return _vormerker.get(index);
