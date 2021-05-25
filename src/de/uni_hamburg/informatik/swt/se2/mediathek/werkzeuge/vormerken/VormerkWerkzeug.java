@@ -223,7 +223,7 @@ public class VormerkWerkzeug
                     .getVormerkkarteFuer(medium);
                 if (karte == null) //null check
                 {
-                    return false;
+                    return true;
                 }
                 if (karte.istVoll())
                 {
